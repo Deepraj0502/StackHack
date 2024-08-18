@@ -13,7 +13,7 @@ function ImageContainer({ imageUrl, sizeClass, name, onClick }) {
       {sizeClass.includes("lg:w-72 lg:h-[380px]") && (
         <div className="transition-all scale-1 duration-200 flex flex-col justify-center w-full sm:w-60 px-4">
           <h1 className="text-base sm:text-lg font-semibold text-white text-center">
-            {name}
+            {name.name}
           </h1>
           <button className="bg-[#AB0A10] rounded-lg p-2 px-4 sm:px-6 text-white text-xs sm:text-sm mt-2 w-24 sm:w-32 m-auto">
             Book Now
@@ -32,12 +32,12 @@ export default function Landing() {
     });
   }
   const names = [
-    "Wonder Woman 1984",
-    "WandaVision",
-    "Zack Snyder’s Justice League",
-    "The Lion King",
-    "Godzolla vs. Kong",
-    "Spirited away",
+    { name: "Wonder Woman 1984", type: "Soon" },
+    { name: "WandaVision", type: "Today" },
+    { name: "Zack Snyder’s Justice League", type: "Today" },
+    { name: "The Lion King", type: "Soon" },
+    { name: "Godzolla vs. Kong", type: "Today" },
+    { name: "Spirited away", type: "Today" },
   ];
   const images = [
     "https://s3-alpha-sig.figma.com/img/2df5/9209/2824661a754120be5ce1e9832a9a3a4b?Expires=1724630400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=VZvN7b0PbSxn-~BRnwjFjdEueQpIvBffcsw4pukuUXe3qyM8jF4L~Ei-0gSOU~OeTwYw4jX3M2fjCYA3e7nqAhEmSrUNE9jO7Um44xLOAhuU3vHtww9SYPrXZDSLNmSl7cR0XFAOyNxaSReaBBCIjo1qSwHC099~rGjRZhIJgdSAzr-CobtoGRY-E3LinQfD8QMM8FNY33YCetDYVHzpaSUtvURaf9M2gq4V3v-aByyLhncuqI8iwQyteOrUaGdfO3jwz2TGqDR8UiiV7plS-AGU7vs5w~FgvfIV2yMbNpHl7fiXVdQUDTXNqxYYHFv~Jmjxq3yy6ffwmYC7IATGhQ__",
@@ -83,7 +83,7 @@ export default function Landing() {
 
   // Determine the number of images to show based on screen width
   const getVisibleImages = () => {
-    if (windowWidth < 1400) {
+    if (windowWidth < 640) {
       return images.slice(0, 6);
     } else if (windowWidth < 1400) {
       return images.slice(0, 5);
@@ -104,7 +104,37 @@ export default function Landing() {
       ></div>
       <div className="h-[100vh] w-[100vw] flex flex-col justify-between relative">
         <NavbarComp />
-        <div className="p-4 sm:p-8 lg:p-16 flex justify-center lg:justify-between items-end gap-4 lg:gap-0">
+        <div className="text-left">
+          {names[selectedMovieIndex].type === "Today" && (
+            <>
+              <img
+                src="https://ik.imagekit.io/ok2wgebfs/Movie/Group%2018312.png?updatedAt=1723970814549"
+                className="w-40 lg:w-52 "
+                alt=""
+              />
+              <img
+                src="https://ik.imagekit.io/ok2wgebfs/Movie/Group%20298.png?updatedAt=1723970814812"
+                className="w-32 lg:w-40 mt-2"
+                alt=""
+              />
+            </>
+          )}
+          {names[selectedMovieIndex].type !== "Today" && (
+            <>
+              <img
+                src="https://ik.imagekit.io/ok2wgebfs/Movie/Group%2018312.png?updatedAt=1723970814549"
+                className="w-32 lg:w-40"
+                alt=""
+              />
+              <img
+                src="https://ik.imagekit.io/ok2wgebfs/Movie/Group%20298.png?updatedAt=1723970814812"
+                className="w-40 lg:w-52 mt-2"
+                alt=""
+              />
+            </>
+          )}
+        </div>
+        <div className="p-4 sm:p-8 lg:p-16 flex justify-center lg:justify-between items-end gap-4 lg:gap-0 h-[400px]">
           {windowWidth < 640 &&
             visibleImages.map((imageUrl, index) => (
               <ImageContainer
