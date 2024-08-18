@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import NavbarComp from "./NavbarComp";
+import CurrentPlaying from "./CurrentPlaying";
 
 function ImageContainer({ imageUrl, sizeClass, name, onClick }) {
   return (
@@ -134,6 +135,7 @@ export default function Landing() {
             ))}
         </div>
       </div>
+      <CurrentPlaying />
     </>
   );
 }
