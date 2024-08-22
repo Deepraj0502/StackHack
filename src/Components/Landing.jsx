@@ -108,12 +108,12 @@ export default function Landing() {
   return (
     <>
       <div
-        className="absolute h-[100vh] w-[100vw] bg-cover brightness-50 bg-center"
+        className="absolute h-[650px] md:h-[100vh] w-[100vw] bg-cover brightness-50 bg-center"
         style={{
           backgroundImage: `url('${backgroundImages[selectedMovieIndex]}')`,
         }}
       ></div>
-      <div className="h-[100vh] w-[100vw] flex flex-col justify-between relative">
+      <div className=" h-[650px] md:h-[100vh] w-[100vw] flex flex-col justify-between relative mb-10">
         <NavbarComp />
         <div className="text-left">
           {names[selectedMovieIndex].type === "Today" && (

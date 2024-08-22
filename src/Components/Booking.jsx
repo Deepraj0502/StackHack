@@ -86,6 +86,9 @@ export default function Booking() {
     if (bookingData.date === "" && bookingData.time === "") {
       toast.error("Invalid date and time");
       return;
+    } else if (bookingData.price === 0) {
+      toast.error("Select atleast one seat");
+      return;
     }
     setShowForm(true);
   };
@@ -309,7 +312,7 @@ export default function Booking() {
       <ToastContainer />
       <NavbarComp />
       {showForm && (
-        <div className="w-[100vw] h-[100vh] absolute z-40 flex justify-center items-center">
+        <div className="w-[100vw] h-[100vh] fixed z-40 flex justify-center items-center">
           {loading && (
             <img
               src="https://cullenk.github.io/Movie-Game-Show-App/images/movie-loading.gif"
@@ -546,9 +549,9 @@ export default function Booking() {
         </div>
       )}
       <img
-        src="https://s3-alpha-sig.figma.com/img/eeb5/4bfe/b7f715a11c3f77fa7d5f1a847fc8360e?Expires=1724630400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=D7ZvfLiVuWncFuKFFhQ9kLnRn24lWfSpgCswE3NZVp0yizIN-Ba0ZfS8rr1nnIN4RJ5ept58WD8R1DGXQ73~pv~wGTxx1QdAa5MBXv3ixPAZuZS7T4rRin1Nzjem1aNzyoyH96NaTGZzVvaEeTEnN0MzIz7vnpg52alDr1p8AK2~WAozFtazyocGJ0CTT-0kHNKSPAUXBAYZzq888fLdFM9HMV76l2hgN1GF08DjEEZCqIlu3pgRK9e~XWly2OiR1hNbjCnUXaU~KfxZKNpLqKMHhqUQJfNKAoLJVZ7NBXhP00Za8Szr~onCOgMHku0MyRp~Qa~RiMl5HvmLVki4zw__"
+        src={location.state.image}
         alt=""
-        className="w-full h-[400px] object-cover md:hidden"
+        className="w-full h-[250px] object-cover md:hidden"
       />
       <div className="flex md:h-[100vh]">
         <div
@@ -729,9 +732,7 @@ export default function Booking() {
         <h1 className="font-bold text-lg">₹{bookingData.price}</h1>
         <button
           className="bg-black rounded-md p-2 px-8 sm:px-6 text-white text-sm gap-1 flex items-center"
-          onClick={() => {
-            window.location.href = "/booking";
-          }}
+          onClick={handlePurchase}
         >
           Proceed <IoIosArrowRoundForward className="w-6 h-6" />
         </button>
