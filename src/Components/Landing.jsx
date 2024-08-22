@@ -1,9 +1,10 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import NavbarComp from "./NavbarComp";
 import CurrentPlaying from "./CurrentPlaying";
+import { useNavigate } from "react-router-dom";
 
 function ImageContainer({ imageUrl, sizeClass, name, onClick }) {
+  const navigate = useNavigate();
   return (
     <div
       className={`${sizeClass} bg-cover bg-center transition-all duration-500 flex flex-col justify-end items-center py-4 cursor-pointer`}
@@ -15,7 +16,17 @@ function ImageContainer({ imageUrl, sizeClass, name, onClick }) {
           <h1 className="text-base sm:text-lg font-semibold text-white text-center">
             {name.name}
           </h1>
-          <button className="bg-[#AB0A10] rounded-lg p-2 px-4 sm:px-6 text-white text-xs sm:text-sm mt-2 w-24 sm:w-32 m-auto">
+          <button
+            className="bg-[#AB0A10] rounded-lg p-2 px-4 sm:px-6 text-white text-xs sm:text-sm mt-2 w-24 sm:w-32 m-auto"
+            onClick={() => {
+              navigate("/booking", {
+                state: {
+                  name: name.name,
+                  image: imageUrl,
+                },
+              });
+            }}
+          >
             Book Now
           </button>
         </div>
@@ -63,6 +74,7 @@ export default function Landing() {
 
   useEffect(() => {
     preloadImages(backgroundImages);
+    preloadImages(images);
     const intervalId = setInterval(() => {
       setSelectedMovieIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 8000);
@@ -81,7 +93,6 @@ export default function Landing() {
     setSelectedMovieIndex(index);
   };
 
-  // Determine the number of images to show based on screen width
   const getVisibleImages = () => {
     if (windowWidth < 640) {
       return images.slice(0, 6);

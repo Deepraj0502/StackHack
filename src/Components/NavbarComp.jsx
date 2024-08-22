@@ -4,9 +4,9 @@ import { LuUser2 } from "react-icons/lu";
 export default function NavbarComp() {
   return (
     <div>
-      <div className="navbar bg-transparent mt-4 brightness-100 px-2 md:px-16 ">
+      <div className="navbar bg-transparent mt-4 brightness-100 px-2 md:px-6 xl:px-16 fixed">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">
+          <a className="btn btn-ghost text-xl" href="/">
             <img
               src="https://ik.imagekit.io/ok2wgebfs/Untitled-2%202.png?updatedAt=1723876926038"
               alt=""
@@ -23,8 +23,8 @@ export default function NavbarComp() {
               <div className="indicator">
                 <input
                   type="checkbox"
-                  value="dark"
-                  className="toggle theme-controller"
+                  value="light"
+                  className="toggle theme-controller !rounded-full"
                 />
               </div>
             </div>
@@ -36,21 +36,15 @@ export default function NavbarComp() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 !flex justify-center items-center rounded-full">
-                <LuUser2 className="w-6 h-6 text-white" />
+                <LuUser2 className="w-6 h-6 black:text-white light:text-black" />
               </div>
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-lg z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
+                <a className="justify-between">Bookings</a>
               </li>
               <li>
                 <a>Logout</a>
