@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import NavbarComp from "./NavbarComp";
 import CurrentPlaying from "./CurrentPlaying";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { checkCookie, getCookie } from "./functions";
 
 function ImageContainer({ imageUrl, sizeClass, name, onClick }) {
   const navigate = useNavigate();
+  const isLogged = checkCookie();
+
   return (
     <div
       className={`${sizeClass} bg-cover bg-center transition-all duration-500 flex flex-col justify-end items-center py-4 cursor-pointer`}
@@ -19,12 +22,16 @@ function ImageContainer({ imageUrl, sizeClass, name, onClick }) {
           <button
             className="bg-[#AB0A10] rounded-lg p-2 px-4 sm:px-6 text-white text-xs sm:text-sm mt-2 w-24 sm:w-32 m-auto"
             onClick={() => {
-              navigate("/booking", {
-                state: {
-                  name: name.name,
-                  image: imageUrl,
-                },
-              });
+              if (isLogged) {
+                navigate("/booking", {
+                  state: {
+                    name: name.name,
+                    image: imageUrl,
+                  },
+                });
+              } else {
+                navigate("/login");
+              }
             }}
           >
             Book Now

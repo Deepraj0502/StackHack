@@ -11,9 +11,11 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import QRCode from "qrcode";
 import TicketPdf from "./TicketPdf";
 import emailjs from "@emailjs/browser";
+import { getCookie } from "./functions";
 
 export default function Booking() {
   const location = useLocation();
+  const user = JSON.parse(getCookie("user"));
   const moviePrice = 250;
   function getNext7Days() {
     const today = new Date();
@@ -27,13 +29,12 @@ export default function Booking() {
     return next7Days;
   }
   const next7Days = getNext7Days();
+  console.log(next7Days);
 
   const seatRows = ["A", "B", "C", "D", "E", "F", "G"];
 
-  const timings = ["08:00", "13:30", "16:00", "20:30", "22:00"];
-
   const [bookingData, setBookingData] = useState({
-    date: "",
+    date: next7Days[0],
     time: "",
     booked: [],
     selected: [],
@@ -43,7 +44,7 @@ export default function Booking() {
 
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    email: user.email,
     phoneCode: "",
     phoneLength: 10,
     phoneNo: "",
@@ -54,6 +55,25 @@ export default function Booking() {
     promoApplied: false,
     promoDiscount: 0,
   });
+  const [timings, setTimings] = useState([]);
+
+  const getUpcomingTimings = (selectedDate) => {
+    const nowUTC = new Date(new Date().toISOString());
+    const currentTime =
+      nowUTC.getHours().toString().padStart(2, "0") +
+      ":" +
+      nowUTC.getMinutes().toString().padStart(2, "0");
+
+    let upcomingTimings = ["08:00", "13:30", "16:00", "20:30", "22:00"];
+    if (selectedDate === next7Days[0]) {
+      upcomingTimings = upcomingTimings.filter((time) => time > currentTime);
+    }
+    return upcomingTimings;
+  };
+
+  useEffect(() => {
+    setTimings(getUpcomingTimings(bookingData.date));
+  }, [bookingData.date]); // Update timings when date changes
 
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -167,6 +187,8 @@ export default function Booking() {
         cardNumber: formData.remember ? formData.cardNumber : "",
         selectedSeats: bookingData.selected,
         amount: bookingData.price + (0.12 * bookingData.price + 10),
+        qrData: qrCodeData,
+        promoDiscount: formData.promoDiscount,
       });
       const bookingRef2 = doc(
         db,
@@ -373,6 +395,7 @@ export default function Booking() {
                   <input
                     type="text"
                     value={formData.promo}
+                    placeholder="GET50"
                     className="input input-bordered w-full border-[#CFCFCF] bg-transparent h-10 rounded-md focus:border-[#CFCFCF] text-black"
                     name="promo"
                     onChange={handleFormChange}
@@ -622,6 +645,9 @@ export default function Booking() {
                     selected: [],
                     price: 0,
                   });
+                  setTimings(() => {
+                    getUpcomingTimings(date);
+                  });
                 }}
               >
                 {date.slice(8)}
@@ -630,26 +656,27 @@ export default function Booking() {
           </div>
           {/* Select Time */}
           <h1 className="font-semibold text-xl mt-4">Time</h1>
-          <div className="flex justify-evenly gap-4 mt-4 border-0 border-b-[1px] pb-10 border-[#525252] flex-wrap">
-            {timings.map((time) => (
-              <div
-                className={
-                  bookingData.time !== time
-                    ? "p-2 bg-[#2B2B2B] rounded-full text-white cursor-pointer pt-1.5 hover:bg-[#8D090D]"
-                    : "p-2 bg-[#8D090D] rounded-full text-white cursor-pointer pt-1.5"
-                }
-                onClick={() => {
-                  setBookingData({
-                    ...bookingData,
-                    time: time,
-                    selected: [],
-                    price: 0,
-                  });
-                }}
-              >
-                {time}
-              </div>
-            ))}
+          <div className="flex justify-evenly gap-4 h-16 mt-4 border-0 border-b-[1px] pb-10 border-[#525252] flex-wrap">
+            {timings !== undefined &&
+              timings.map((time) => (
+                <div
+                  className={
+                    bookingData.time !== time
+                      ? "p-2 bg-[#2B2B2B] rounded-full text-white cursor-pointer pt-1.5 hover:bg-[#8D090D]"
+                      : "p-2 bg-[#8D090D] rounded-full text-white cursor-pointer pt-1.5"
+                  }
+                  onClick={() => {
+                    setBookingData({
+                      ...bookingData,
+                      time: time,
+                      selected: [],
+                      price: 0,
+                    });
+                  }}
+                >
+                  {time}
+                </div>
+              ))}
           </div>
           {/* Seat Selector */}
           <div className="w-[300px] md:w-[415px] mt-8">

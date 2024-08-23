@@ -124,8 +124,6 @@ function formatDate(inputDate) {
 
 // Create PDF
 const TicketPdf = (props) => {
-  console.log(props);
-
   return (
     <Document>
       <Page style={styles.page}>
@@ -232,7 +230,10 @@ const TicketPdf = (props) => {
             </Text>
             <Text style={{ fontWeight: 900, fontFamily: "Open Sans" }}>
               Rs.{" "}
-              {props.bookingData.price + (0.12 * props.bookingData.price + 10)}
+              {(
+                props.bookingData.price +
+                (0.12 * props.bookingData.price + 10)
+              ).toFixed(2)}
             </Text>
           </View>
         </View>
