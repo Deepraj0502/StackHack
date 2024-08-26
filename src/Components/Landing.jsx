@@ -43,6 +43,7 @@ function ImageContainer({ imageUrl, sizeClass, name, onClick }) {
 }
 
 export default function Landing() {
+  const navigate = useNavigate();
   function preloadImages(urls) {
     urls.forEach((url) => {
       const img = new Image();
@@ -80,6 +81,11 @@ export default function Landing() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
+    console.log(getCookie());
+
+    if (!checkCookie()) {
+      navigate("/login");
+    }
     preloadImages(backgroundImages);
     preloadImages(images);
     const intervalId = setInterval(() => {

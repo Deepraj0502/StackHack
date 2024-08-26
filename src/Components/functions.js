@@ -17,10 +17,10 @@ export function getCookie(cname = "accessToken") {
       return c.substring(name.length, c.length);
     }
   }
-  return "";
+  return null;
 }
 
 export function checkCookie() {
   let accessToken = getCookie("accessToken");
-  return accessToken !== "null";
+  return accessToken !== null;
 }
