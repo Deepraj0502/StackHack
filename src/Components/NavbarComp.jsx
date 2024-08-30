@@ -3,7 +3,7 @@ import { LuUser2 } from "react-icons/lu";
 import { setCookie, checkCookie } from "./functions";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export default function NavbarComp() {
+export default function NavbarComp(props) {
   const [scrolled, setScrolled] = useState(false);
   const isLogged = checkCookie();
 
@@ -22,9 +22,12 @@ export default function NavbarComp() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
   const handleLogout = () => {
-    setCookie("accessToken", null, "Thu, 01 Jan 1970 00:00:00 UTC");
+    // Assuming setCookie sets a cookie with name, value, and expiry date
+    setCookie("accessToken", "", "Thu, 01 Jan 1970 00:00:00 GMT"); // Set value to empty string
+    setCookie("user", "", "Thu, 01 Jan 1970 00:00:00 GMT"); // Set value to empty string
+
+    // Navigate to home page
     navigate("/");
   };
 

@@ -1,10 +1,7 @@
 // functions.js
 
 export function setCookie(cname, cvalue, exdays) {
-  const expires = `;expires=${new Date(
-    Date.now() + exdays * 864e5
-  ).toUTCString()}`;
-  document.cookie = `${cname}=${cvalue}${expires};path=/`;
+  document.cookie = `${cname}=${cvalue}; expires=${exdays}; path=/`;
 }
 
 export function getCookie(cname = "accessToken") {

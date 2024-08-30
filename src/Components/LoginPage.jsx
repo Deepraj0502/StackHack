@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithGooglePopup, auth } from "../firebase";
+import { signInWithGooglePopup, auth, db } from "../firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -7,6 +7,7 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import { checkCookie, getCookie, setCookie } from "./functions";
 import { useNavigate } from "react-router-dom";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export default function () {
   const navigate = useNavigate();
@@ -36,6 +37,17 @@ export default function () {
         JSON.stringify(response.user),
         response.user.expirationTime
       );
+      const bookingRef3 = doc(db, "users", `${response.user.email}`);
+      const bookingSnap3 = await getDoc(bookingRef3);
+
+      if (!bookingSnap3.exists()) {
+        await setDoc(bookingRef3, {
+          email: response.user.email,
+          username: response.user.displayName,
+          phoneNo: response.user.phoneNumber,
+          phoneCode: "+91",
+        });
+      }
       toast.success("Login successful");
       navigate("/");
     } catch (error) {
@@ -61,7 +73,19 @@ export default function () {
         regData.email,
         regData.password
       );
+
       const user = userCredential.user;
+      const bookingRef3 = doc(db, "users", `${user.email}`);
+      const bookingSnap3 = await getDoc(bookingRef3);
+
+      if (!bookingSnap3.exists()) {
+        await setDoc(bookingRef3, {
+          email: user.email,
+          username: user.displayName,
+          phoneNo: user.phoneNumber,
+          phoneCode: "+91",
+        });
+      }
       const token = await user.getIdToken(); // Get the ID token
       toast.success("Registration successful");
       setCookie("accessToken", token, user.refreshToken); // Use refreshToken for expiration
@@ -80,6 +104,17 @@ export default function () {
         loginData.password
       );
       const user = userCredential.user;
+      const bookingRef3 = doc(db, "users", `${user.email}`);
+      const bookingSnap3 = await getDoc(bookingRef3);
+
+      if (!bookingSnap3.exists()) {
+        await setDoc(bookingRef3, {
+          email: user.email,
+          username: user.displayName,
+          phoneNo: user.phoneNumber,
+          phoneCode: "+91",
+        });
+      }
       const token = await user.getIdToken(); // Get the ID token
       toast.success("Login successful");
       setCookie("accessToken", token, user.refreshToken); // Use refreshToken for expiration

@@ -220,7 +220,13 @@ export default function Booking() {
       if (!bookingSnap3.exists()) {
         await setDoc(bookingRef3, {
           email: formData.email,
-          cardNumber: formData.cardNumber,
+          username: formData.name,
+          phoneNo: formData.phoneNo,
+          phoneCode: formData.phoneCode,
+        });
+      } else {
+        await setDoc(bookingRef3, {
+          email: formData.email,
           username: formData.name,
           phoneNo: formData.phoneNo,
           phoneCode: formData.phoneCode,
@@ -380,8 +386,9 @@ export default function Booking() {
                 <input
                   type="text"
                   value={formData.email}
-                  className="input input-bordered w-full border-[#CFCFCF] bg-transparent h-10 rounded-md focus:border-[#CFCFCF] text-black"
+                  className="input input-bordered w-full border-[#CFCFCF] bg-transparent h-10 rounded-md text-white focus:border-[#CFCFCF] "
                   name="email"
+                  disabled
                   onChange={handleFormChange}
                 />
               </label>
@@ -451,70 +458,10 @@ export default function Booking() {
                   />
                 </div>
               </label>
-              <label className="form-control w-full max-w-md mt-2">
-                <div className="label">
-                  <span className="label-text text-black text-md font-semibold">
-                    Payment
-                    <span className="relative text-red-500 text-sm bottom-0 left-1">
-                      *
-                    </span>
-                  </span>
-                </div>
-                <select
-                  className="select w-full border border-[#CFCFCF] bg-transparent text-black !h-10 min-h-0 rounded-md focus:border-[#CFCFCF]"
-                  name="paymentType"
-                  value={formData.paymentType}
-                  onChange={handleFormChange}
-                >
-                  <option selected value="Visa bank card">
-                    Visa bank card
-                  </option>
-                  <option selected value="RazorPay">
-                    RazorPay
-                  </option>
-                </select>
-                {formData.paymentType !== "RazorPay" && (
-                  <>
-                    <div className="relative">
-                      <IoCardOutline className="absolute top-[45%] left-[92%] text-[#4D4D4D] w-6 h-6" />
-                      <input
-                        type="text"
-                        className="input mt-4 input-bordered w-full border-[#CFCFCF] bg-transparent h-10 rounded-md focus:border-[#CFCFCF] text-black"
-                        name="cardNumber"
-                        value={formData.cardNumber}
-                        onChange={handleFormChange}
-                      />
-                    </div>
-
-                    <div className="form-control w-max m-auto mt-4">
-                      <label className="label cursor-pointer text-[#6E6E6E]">
-                        <input
-                          type="checkbox"
-                          className="checkbox checkbox-primary w-4 h-4 rounded-sm bg-[#D0D0D0] border-0 mt-[2px]"
-                          name="remember"
-                          onChange={() => {
-                            setFormData({
-                              ...formData,
-                              remember: !formData.remember,
-                            });
-                          }}
-                        />
-                        <span className="label-text text-[#6E6E6E] font-semibold ml-3">
-                          Remember my card information
-                        </span>
-                      </label>
-                    </div>
-                  </>
-                )}
-              </label>
 
               <button
-                className="bg-[#8D090D] rounded-lg p-2 px-4 sm:px-6 text-white text-xs sm:text-sm mt-4 w-max mb-4 m-auto"
-                onClick={
-                  formData.paymentType === "RazorPay"
-                    ? handlePayment
-                    : handleFormSubmit
-                }
+                className="bg-[#8D090D] rounded-lg p-2 px-4 sm:px-6 text-white text-xs sm:text-sm mt-8 w-max mb-4 m-auto"
+                onClick={handlePayment}
               >
                 Purchase (₹
                 {bookingData.price +

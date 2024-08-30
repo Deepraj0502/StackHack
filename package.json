@@ -12,6 +12,7 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@react-pdf/renderer": "^3.4.4",
+    "apexcharts": "^3.52.0",
     "axios": "^1.7.4",
     "emailjs-com": "^3.2.0",
     "firebase": "^10.13.0",
