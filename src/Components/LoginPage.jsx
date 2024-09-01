@@ -46,6 +46,7 @@ export default function () {
           username: response.user.displayName,
           phoneNo: response.user.phoneNumber,
           phoneCode: "+91",
+          uid: response.user.uid,
         });
       }
       toast.success("Login successful");
@@ -75,6 +76,8 @@ export default function () {
       );
 
       const user = userCredential.user;
+      console.log(user);
+
       const bookingRef3 = doc(db, "users", `${user.email}`);
       const bookingSnap3 = await getDoc(bookingRef3);
 
@@ -84,6 +87,7 @@ export default function () {
           username: user.displayName,
           phoneNo: user.phoneNumber,
           phoneCode: "+91",
+          uid: user.uid,
         });
       }
       const token = await user.getIdToken(); // Get the ID token
@@ -113,6 +117,7 @@ export default function () {
           username: user.displayName,
           phoneNo: user.phoneNumber,
           phoneCode: "+91",
+          uid: user.uid,
         });
       }
       const token = await user.getIdToken(); // Get the ID token

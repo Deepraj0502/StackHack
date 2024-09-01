@@ -4,6 +4,7 @@ import { db } from "../../firebase";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
+import { setCookie } from "../functions";
 
 export default function AdminLoginPage() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function AdminLoginPage() {
         bookingSnap3.data().username === loginData.username &&
         bookingSnap3.data().password === loginData.password
       ) {
+        setCookie("user", "admin", new Date().getTime());
         navigate("/admin/dashboard");
         toast.success("Success");
       } else {

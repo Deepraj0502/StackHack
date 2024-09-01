@@ -258,7 +258,7 @@ function AdminDashboard() {
           </h1>
           <div id="chart3"></div>
         </div>
-        <div className="flex flex-wrap justify-between gap-10">
+        <div className="flex flex-wrap justify-between gap-5">
           <div className="bg-[#1f263c] p-2 rounded-lg w-full md:w-[48%] mt-4 md:mt-8">
             <h1 className="text-left px-4 py-1 text-xl text-white font-bold">
               Bookings

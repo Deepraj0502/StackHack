@@ -29,7 +29,6 @@ export default function Booking() {
     return next7Days;
   }
   const next7Days = getNext7Days();
-  console.log(next7Days);
 
   const seatRows = ["A", "B", "C", "D", "E", "F", "G"];
 
@@ -284,8 +283,6 @@ export default function Booking() {
   }, []);
 
   const handlePayment = () => {
-    console.log(bookingData);
-
     const options = {
       key: "rzp_test_8zYUhIDCoi8TRr",
       amount: (bookingData.price + (0.12 * bookingData.price + 10)) * 100,
@@ -312,8 +309,7 @@ export default function Booking() {
           )
           .then(() => {
             setLoading(false);
-            toast.success("Payment Successful");
-            setSuccess(true);
+            handleFormSubmit();
           })
           .catch((error) => {
             console.error("Failed to send email:", error); // Use console.error for errors
@@ -386,7 +382,7 @@ export default function Booking() {
                 <input
                   type="text"
                   value={formData.email}
-                  className="input input-bordered w-full border-[#CFCFCF] bg-transparent h-10 rounded-md text-white focus:border-[#CFCFCF] "
+                  className="input disabled:bg-white disabled:text-black disabled:border-[#CFCFCF] input-bordered w-full border-[#CFCFCF] bg-transparent h-10 rounded-md text-white focus:border-[#CFCFCF] "
                   name="email"
                   disabled
                   onChange={handleFormChange}
@@ -624,6 +620,9 @@ export default function Booking() {
                   {time}
                 </div>
               ))}
+            {timings !== undefined && timings.length === 0 && (
+              <p>No shows available</p>
+            )}
           </div>
           {/* Seat Selector */}
           <div className="w-[300px] md:w-[415px] mt-8">

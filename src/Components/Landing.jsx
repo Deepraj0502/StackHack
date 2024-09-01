@@ -27,7 +27,7 @@ function ImageContainer({ imageUrl, sizeClass, name, onClick }) {
             onClick={(e) => {
               e.stopPropagation(); // Prevent the click event from bubbling up
               if (isLogged) {
-                navigate("/booking", {
+                navigate("/theaters", {
                   state: {
                     name: name.name,
                     image: imageUrl,
