@@ -72,7 +72,7 @@ export default function Landing() {
   ];
 
   const backgroundImages = [
-    "https://ik.imagekit.io/ok2wgebfs/Movie/image.png?updatedAt=1724681834116",
+    "https://ik.imagekit.io/ok2wgebfs/Movie/image.png?updatedAt=1725004031711",
     "https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/5525675DDD0ADAC6D5527A7E051241B2DB49578C204C32C9C097B67022EABFC8/scale?width=1200&aspectRatio=1.78&format=webp",
     "https://ik.imagekit.io/ok2wgebfs/Movie/image(5).png?updatedAt=1724681496241",
     "https://ik.imagekit.io/ok2wgebfs/Movie/image(8).png?updatedAt=1724681488831",
