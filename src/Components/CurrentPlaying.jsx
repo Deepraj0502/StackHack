@@ -1,9 +1,31 @@
 import { data } from "autoprefixer";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GoArrowRight } from "react-icons/go";
+import { db } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
+
+async function fetchDataFromFirestore() {
+  const querySnapshot = await getDocs(collection(db, "movies"));
+
+  const data = [];
+  querySnapshot.forEach((doc) => {
+    data.push({ name: doc.name, ...doc.data() });
+  });
+  return data;
+}
 
 export default function CurrentPlaying() {
-  const [showAll, setShowAll] = useState(false);
+ const [moviesData, setMoviesData ] = useState([]);
+  
+ useEffect(() => {
+  async function fetchData() {
+    const data = await fetchDataFromFirestore();
+    setmoviesData(data);
+  }
+  fetchData();
+ }, []); 
+ 
+ const [showAll, setShowAll] = useState(false);
   const [showAll2, setShowAll2] = useState(false);
 
   const cards = [
@@ -250,7 +272,7 @@ export default function CurrentPlaying() {
       <div className="p-2 lg:p-20">
         <div className="flex flex-row ">
           <div className="w-[50%]">
-            <h5 className="font-bold text-lg lg:text-xl">Current Playing</h5>
+            <h5 className="font-bold text-lg lg:text-xl">Coming soon</h5>
           </div>
           <div className="w-[50%] flex justify-end">
             <div className="flex cursor-pointer" onClick={toggleCards2}>
@@ -262,7 +284,7 @@ export default function CurrentPlaying() {
           </div>
         </div>
         <div className="pt-6 lg:pt-10 ">
-          <div className="flex md:grid md:grid-cols-1 md:grid-cols-4  md:justify-between overflow-x-auto gap-4 ">
+          <div className="grid  grid-cols-1 lg:grid-cols-4  justify-between gap-4  ">
             {displayedCards2.map((data3) => (
               <div
                 className="bg-cover bg-center h-[380px] lg:h-[450px] transition-all duration-500 flex flex-col justify-end items-center py-2 lg:py-4 cursor-pointer "
