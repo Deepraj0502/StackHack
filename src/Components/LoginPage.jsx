@@ -147,7 +147,7 @@ export default function () {
     <div className="md:h-[100vh] w-[100vw] flex">
       <ToastContainer />
       <img
-        src="https://scontent.fbom3-1.fna.fbcdn.net/v/t1.6435-9/92567930_1611352415683557_7530899753928753152_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=7b2446&_nc_ohc=uSLhGPeSfO8Q7kNvgGxJOkn&_nc_ht=scontent.fbom3-1.fna&oh=00_AYD35FdGZ2ndiPriZYyWZDqQQNYaCCgh2tzxT1mluo5oow&oe=66EFE463"
+        src="https://wallpapers.com/images/featured/movie-9pvmdtvz4cb0xl37.jpg"
         alt=""
         className="w-[50%] hidden md:block rounded-r-3xl object-cover "
       />
