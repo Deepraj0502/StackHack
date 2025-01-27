@@ -147,7 +147,7 @@ export default function () {
     <div className="md:h-[100vh] w-[100vw] flex">
       <ToastContainer />
       <img
-        src="https://wallpapers.com/images/featured/movie-9pvmdtvz4cb0xl37.jpg"
+        src="https://www.marannetwork.com/wp-content/uploads/2021/07/Movice-Poster-Material-psd-file.jpg"
         alt=""
         className="w-[50%] hidden md:block rounded-r-3xl object-cover "
       />
